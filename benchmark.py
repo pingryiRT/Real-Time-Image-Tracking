@@ -12,7 +12,7 @@ y = 0
 count = 0
 for i in range(0,len(image)): #rows
 	for j in range(0,len(image[i])): #cols
-		if threshold(color,image[i,j]):
+		if threshold(color,image[i,j],30):
 			x += j
 			y += i
 			count += 1
