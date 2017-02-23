@@ -12,7 +12,8 @@ int threshold (uchar targetB, uchar targetG, uchar targetR, uchar b, uchar g, uc
 };
 int main( int argc, char** argv )
 {
-	cv::Mat m = cv::imread("benchmark.jpg", CV_LOAD_IMAGE_COLOR);
+	cv::Mat m;
+	m = cv::imread("benchmark.jpg", CV_LOAD_IMAGE_COLOR);
 	uchar r = 0;
 	uchar g = 255;
 	uchar b = 255;
@@ -31,9 +32,9 @@ int main( int argc, char** argv )
 		}
 	}
 	if (count == 0){
-		printf("(0,0)n");
+		printf("(0,0)\n");
 	}else{
-		printf("(%d,%d)n",x/count,y/count);
+		printf("(%d,%d)\n",x/count,y/count);
 	}
 	return 0;
 }
