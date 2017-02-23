@@ -1,3 +1,0 @@
-/home/ubuntu/Documents/Real-Time-Image-Tracking-Java/CMakeFiles/rebuild_cache.dir
-/home/ubuntu/Documents/Real-Time-Image-Tracking-Java/CMakeFiles/edit_cache.dir
-/home/ubuntu/Documents/Real-Time-Image-Tracking-Java/CMakeFiles/benchmark.dir
