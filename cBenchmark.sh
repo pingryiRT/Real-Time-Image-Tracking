@@ -1,6 +1,8 @@
 #!/bin/bash
+
+cd src;
 i=0
-for i in {1..20}
+for i in {1..60}
 do
-        (time ./src/benchmark) 2>&1 > /dev/null | grep real >> "benchmark data/c.txt"  
+         (time ./benchmark) 2>&1 > /dev/null | grep real >> "../benchmark data/c.txt"  
 done   
