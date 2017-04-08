@@ -12,7 +12,8 @@ int main(int argc, char** argv){
 	// Check VideoCapture documentation.
 	if(!cap.open(0))
 		return 0;
-	int thresh = 80;
+	int thresh = 90;
+	int black = false;
 	while(true){
 		Mat frame;
 		cap >> frame;
@@ -26,6 +27,8 @@ int main(int argc, char** argv){
   		/// Detect edges using canny
   		Canny( gray, canny_output, thresh, thresh*2, 3 );
   		/// Find contours
+		if(black)
+			frame = Mat::zeros( frame.size(), CV_8UC3 );
   		findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 		for( int i = 0; i< contours.size(); i++ )
      		{
@@ -35,6 +38,8 @@ int main(int argc, char** argv){
 		int key = waitKey(10);
 		if( key == 27 ){
 			break;
+		}else if (key == 32){
+			black = !black;
 		}
 	}
 	return 0;
