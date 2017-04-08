@@ -12,8 +12,10 @@ int main(int argc, char** argv){
 	// Check VideoCapture documentation.
 	if(!cap.open(0))
 		return 0;
-	int thresh = 90;
+	int thresh = 70;
 	int black = false;
+	namedWindow("camera",1);
+	createTrackbar("Threshold","camera",&thresh,500);
 	while(true){
 		Mat frame;
 		cap >> frame;
@@ -25,7 +27,7 @@ int main(int argc, char** argv){
   		vector<vector<Point> > contours;
   		vector<Vec4i> hierarchy;
   		/// Detect edges using canny
-  		Canny( gray, canny_output, thresh, thresh*2, 3 );
+  		Canny( gray, canny_output, (thresh+20), (thresh+20)*2, 3 );
   		/// Find contours
 		if(black)
 			frame = Mat::zeros( frame.size(), CV_8UC3 );

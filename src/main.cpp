@@ -13,35 +13,47 @@ int threshold (uchar targetB, uchar targetG, uchar targetR, uchar b, uchar g, uc
 		return false;
 	return true;
 };
+int r = 0;
+int g = 0;
+int b = 0;
+Mat frame;
+void mouseClickEvent(int event, int x, int y, int flags, void* userdata){
+	if  ( event == EVENT_LBUTTONDOWN ){
+		Vec3b pixel = frame.at<Vec3b>(Point(x,y));
+		b = pixel.val[0];
+		g = pixel.val[1];
+		r = pixel.val[2];
+		setTrackbarPos("Blue:", "camera", b);
+		setTrackbarPos("Green:", "camera", g);		
+		setTrackbarPos("Red:", "camera", r);
+	}
+}
+
 int main(int argc, char** argv){
 	VideoCapture cap(0);
 	// open the default camera, use something different from 0 otherwise;
 	// Check VideoCapture documentation.
 	if(!cap.open(0))
 		return 0;
-	Vec3b color;
 	Scalar low;
 	Scalar high;
 	int t = 20;       
 	int threshtoggle = false;
 	namedWindow("camera",1);
 	createTrackbar("Theshold:", "camera", &t, 255);
-	resizeWindow("camera", 1280, 720);
-	int r = 0; int g = 0; int b = 0;
+	setMouseCallback("camera", mouseClickEvent, NULL);
 	createTrackbar("Red:","camera",&r,255);
 	createTrackbar("Green:","camera",&g,255);
 	createTrackbar("Blue:","camera",&b,255);
 	//createButton(NULL,NULL);
 	while(true){
-		Vec3b color = Vec3b(b,g,r);
-		Mat frame;
 		cap >> frame;
 		if(frame.empty())
 			break;
 		Mat showframe;
 		if (threshtoggle){
-			low = Scalar(color.val[0]-t,color.val[1]-t,color.val[2]-t);
-			high = Scalar(color.val[0]+t,color.val[1]+t,color.val[2]+t);
+			low = Scalar(b-t,g-t,r-t);
+			high = Scalar(b+t,g+t,r+t);
 			inRange(frame, low, high, showframe);
 		}else {
 			showframe = frame;
@@ -52,8 +64,8 @@ int main(int argc, char** argv){
 		int y = 0;
 		for(int i = 0; i < frame.rows; i++){
 			for(int j = 0; j < frame.cols; j++){
-				cv::Vec3b pixel = frame.at<cv::Vec3b>(cv::Point(j,i));
-				if (threshold(color.val[0],color.val[1],color.val[2],pixel.val[0],pixel.val[1],pixel.val[2],t)){
+				Vec3b pixel = frame.at<Vec3b>(Point(j,i));
+				if (threshold(b,g,r,pixel.val[0],pixel.val[1],pixel.val[2],t)){
 					x += j;
 					y += i;
 					count += 1;
@@ -62,12 +74,11 @@ int main(int argc, char** argv){
 		}
 		
 		if (count != 0){
-			if (threshtoggle){
+			if (threshtoggle)
 				circle(showframe,Point(x/count,y/count),10,Scalar(255,255,255),-1);
-				circle(showframe,Point(x/count,y/count),10,Scalar(0,0,0),4 );
-			}else{
+			else
 				circle(showframe,Point(x/count,y/count),10,Scalar(b,g,r),-1);
-			}
+			circle(showframe,Point(x/count,y/count),10,Scalar(0,0,0),4 );
 		}	
 		imshow("camera", showframe);
 		int key = waitKey(10);
