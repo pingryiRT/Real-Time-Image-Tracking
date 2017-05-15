@@ -1,0 +1,9 @@
+install dev tools
+look through first few coding projects
+https://wpilib.screenstepslive.com/s/3120/m/7913
+
+make a client that utilized network tables
+https://wpilib.screenstepslive.com/s/3120/m/7912/l/80205-writing-a-simple-networktables-program-in-c-and-java-with-a-java-client-pc-side
+
+make the robot code utilize network tables
+http://wpilib.screenstepslive.com/s/4485/m/24194/l/479908-reading-array-values-published-by-networktables
